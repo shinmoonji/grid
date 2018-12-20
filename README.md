@@ -334,27 +334,27 @@ editOptions: {
     editing: {
         mode: 'inline', //cell, inline, popup
         addButton: {
-            caption: '추가'
+            caption: 'Add'
             , visible: true
         },
         updateButton: {
-            caption: '수정'
+            caption: 'Update'
             , visible: true
         },
         cancelButton: {
-            caption: '취소'
+            caption: 'Cancel'
             , visible: true
         },
         copyButton: {
-            caption: '복사'
+            caption: 'Copy'
             , visible: false
         },
         deleteButton: {
-            caption: '삭제'
+            caption: 'Delete'
             , visible: true
         },
         insertButton: {
-            caption: '삽입'
+            caption: 'Insert'
             , visible: false
         }
     }
