@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zsmcJs.Grid.Binding</title>
+
+    <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="../css/zsmc-common.css" />
+    <link rel="stylesheet" href="../css/zsmc-grid.css" />
+    <link rel="stylesheet" href="../css/zsmc-icon.css" />
+</head>
+<body>
+    <div class="row">
+        <div id="grid">
+        </div>
+    </div>
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="../node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="../js/zsmc.lib.js"></script>
+    <script type="text/javascript" src="../js/zsmc.prototype.extension.js"></script>
+    <script type="text/javascript" src="../js/zsmc.grid.js"></script>
+    <script type="text/javascript" src="../js/zsmc.grid.template.js"></script>
+    <script type="text/html" id="popup-editor">
+        <div class="row">
+            <div class="col-md-4">Name</div>
+            <div class="col-md-8"><input type="text" class="input-sm form-control" name="Name" /></div>
+            <div class="col-md-4">Phone</div>
+            <div class="col-md-8"><input type="text" class="input-sm form-control" name="Phone" /></div>
+            <div class="col-md-4">Company</div>
+            <div class="col-md-8"><input type="text" class="input-sm form-control" name="Company" /></div>
+            <div class="col-md-4">Zip</div>
+            <div class="col-md-8"><input type="text" class="input-sm form-control" name="Zip" /></div>
+            <div class="col-md-4">City</div>
+            <div class="col-md-8">
+                <select class="input-sm form-control" name="City">     
+                    <option value="1">Fogo</option>
+                    <option value="2">Machelen</option>
+                    <option value="3">Norman</option>
+                    <option value="4">Sautin</option>
+                </select>    
+            </div>
+            <div class="col-md-4">Date</div>
+            <div class="col-md-8"><input type="text" class="input-sm form-control" name="Date" /></div>
+            <div class="col-md-4">Use</div>
+            <div class="col-md-8">
+                <label>
+                    <input type="checkbox" class="zsmc" name="Use">
+                    <span class="lbl"></span>
+                </label>
+            </div>
+            <div class="col-md-4">Memo</div>
+            <div class="col-md-8">
+                <textarea name="Memo" class="input-sm form-control">
+                </textarea>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            var data = [
+                {
+                    Id: 1
+                    , Name: 'Jennifer'
+                    , Phone: '1-342-463-8341'
+                    , Company: 'Et Rutrum Non Associates'
+                    , Zip: 35728
+                    , City: 1
+                    , BirthDay: new Date(2014, 3, 4)
+                    , Use: true
+                    , Memo: 'Remarks'
+                },
+                {
+                    Id: 2
+                    , Name: 'Clark'
+                    , Phone: '1-516-859-1120'
+                    , Company: 'Nam Ac Inc.'
+                    , Zip: 7162
+                    , City: 2
+                    , BirthDay: new Date(2013, 3, 23)
+                    , Use: true
+                },
+                {
+                    Id: 3
+                    , Name: 'Brendan'
+                    , Phone: '1-724-406-2487'
+                    , Company: 'Enim Commodo Limited'
+                    , Zip: 98611
+                    , City: 3
+                    , BirthDay: new Date(2014, 2, 13)
+                    , Use: true
+                },
+                {
+                    Id: 4
+                    , Name: 'Warren'
+                    , Phone: '1-412-485-9725'
+                    , Company: 'Odio Etiam Institute'
+                    , Zip: 10312
+                    , City: 4
+                    , BirthDay: new Date(2013, 1, 1)
+                    , Use: true
+                }
+            ]
+
+            var grid = new zsmcJs.grid({
+                keyField: 'Id',
+                width: '100%',
+                columns: [
+                    {
+                        header: 'Id'
+                        , name: 'Id'
+                        , visible: false
+                    }
+                    , {
+                        header: 'Name'
+                        , name: 'Name'
+                        , width: 200
+                        , dataType: 'text'
+                        , displayType: 'link'
+                        , link: '/Home/ZsmcBinding/{{Id}}'
+                        , target: '_blank'
+                        , editor: {
+                            type: 'text'
+                        }
+                    }
+                    , {
+                        header: 'Phone'
+                        , name: 'Phone'
+                        , align: 'center'
+                        , width: 200
+                        , editor: {
+                            type: 'text'
+                        }
+                    }
+                    , {
+                        header: 'Company'
+                        , name: 'Company'
+                        , width: 400
+                        , editor: {
+                            type: 'text'
+                        }
+                    }
+                    , {
+                        header: 'Zip'
+                        , name: 'Zip'
+                        , width: 120
+                        , dataType: 'number'
+                        , editor: {
+                            type: 'text'
+                        }
+                    }
+                    , {
+                        header: 'City'
+                        , name: 'City'
+                        , width: 120
+                        , editor: {
+                            type: 'select'
+                        },
+                        selectOptions: [
+                              { text: 'Fogo', value: 1 }
+                            , { text: 'Machelen', value: 2 }
+                            , { text: 'Norman', value: 3 }
+                            , { text: 'Sautin', value: 4 }
+                        ]
+                    }
+                    , {
+                        header: 'BirthDay'
+                        , name: 'BirthDay'
+                        , align: 'center'
+                        , width: 100
+                        , dataType: 'datetime'
+                        , displayType: 'datetime'
+                        , displayFormat: 'yyyy-mm-dd'
+                        , editor: {
+                            type: 'date'
+                        }
+                    }
+                    , {
+                        header: 'Use'
+                        , name: 'Use'
+                        , align: 'center'
+                        , width: 100
+                        , dataType: 'bool'
+                        , displayType: 'checkbox'
+                        , editor: {
+                            type: 'checkbox'
+                        }
+                    }
+                ],
+                editOptions: {
+                    actionMode: 'local',
+                    actionColumn: {
+                        width: 100,
+                        visible: true,
+                        newAction: {
+                            visible: true
+                        },
+                        editAction: {
+                            visible: true
+                        },
+                        deleteAction: {
+                            visible: true
+                        }
+                    },
+                    editing: {
+                        mode: 'popup', //cell, inline, popup
+                        actionMode: 'local',
+                        popupView: {
+                            title: 'User Information',
+                            template: 'popup-editor'
+                        },
+                        addButton: {
+                            visible: false
+                        },
+                        updateButton: {
+                            visible: true
+                        },
+                        cancelButton: {
+                            visible: true
+                        },
+                        copyButton: {
+                            visible: false
+                        },
+                        deleteButton: {
+                            visible: false
+                        },
+                        insertButton: {
+                            visible: false
+                        }
+                    }
+                }
+            });
+            grid.GridView.draw($("#grid"));
+            grid.Provider.bindData(data);
+
+        });
+    </script>
+
+</body>
+</html>

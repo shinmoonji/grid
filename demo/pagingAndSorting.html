@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zsmcJs.Grid.Binding</title>
+
+    <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/zsmc-common.css" />
+    <link rel="stylesheet" href="../css/zsmc-grid.css" />
+    <link rel="stylesheet" href="../css/zsmc-icon.css" />
+</head>
+
+<body>
+    <div class="row">
+        <span>Local (Paging, Sorting)</span>
+        <div id="grid">
+        </div>
+
+        <br />
+
+        <span>Remote (Paging, Sorting)</span>
+        <div id="grid2">
+        </div>
+
+        <br />
+    </div>
+
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/zsmc.lib.js"></script>
+    <script type="text/javascript" src="../js/zsmc.prototype.extension.js"></script>
+    <script type="text/javascript" src="../js/zsmc.grid.js"></script>
+    <script type="text/javascript" src="../js/zsmc.grid.template.js"></script>
+    <script type="text/javascript" src="../js/zsmc.grid.data.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var grid = new zsmcJs.grid({
+                keyField: 'Id',
+                maxWidth: '100%',
+                columns: [
+                    {
+                        header: 'Id'
+                        , name: 'Id'
+                        , visible: false
+                    }
+                    , {
+                        header: 'Name'
+                        , name: 'Name'
+                        , width: 200
+                        , dataType: 'text'
+                        , displayType: 'link'
+                        , link: '/Home/ZsmcBinding/{{Id}}'
+                        , target: '_blank'
+                    }
+                    , {
+                        header: 'Phone'
+                        , name: 'Phone'
+                        , align: 'center'
+                        , width: 200
+                    }
+                    , {
+                        header: 'Company'
+                        , name: 'Company'
+                        , width: 400
+                    }
+                    , {
+                        header: 'Zip'
+                        , name: 'Zip'
+                        , width: 120
+                        , dataType: 'number'
+                    }
+                    , {
+                        header: 'City'
+                        , name: 'City'
+                        , width: 120
+                    }
+                    , {
+                        header: 'BirthDay'
+                        , name: 'BirthDay'
+                        , align: 'center'
+                        , width: 100
+                        , dataType: 'datetime'
+                        , displayType: 'datetime'
+                        , displayFormat: 'yyyy-mm-dd'
+                    }
+                    , {
+                        header: 'Use'
+                        , name: 'Use'
+                        , align: 'center'
+                        , width: 100
+                        , dataType: 'bool'
+                        , displayType: 'checkBox'
+                    }
+                ],
+                viewOptions: {
+                    actionMode: 'local',
+                    paging: {
+                        visible: true,
+                        rowCount: 5,
+                        blockSize: 5
+                    },
+                    sorting: {
+                        visible: true
+                    }
+                }
+            });
+            grid.GridView.draw($("#grid"));
+            grid.Provider.bindData(data);
+
+
+            //var grid2 = new zsmcJs.grid({
+            //    keyField: 'Id',
+            //    width: '100%',
+            //    columns: [
+            //        { header: 'Id', name: 'Id', width: 0, visible: false }
+            //        , { header: '상품코드', name: 'GoodsCode', width: 200, visible: true, fixed: false }
+            //        , { header: '상품명', name: 'GoodsName', width: 200, visible: true }
+            //        , { header: '공연장코드', name: 'PlaceCode', width: 200, visible: true }
+            //        , { header: '공연장명', name: 'PlaceName', width: 200, visible: true }
+            //        , { header: '거래처명', name: 'BizName', width: 200, visible: true }
+            //        , { header: '판매특성', name: 'SalesType', width: 200, visible: true }
+            //        , { header: '시작일', name: 'StartDate', width: 200, visible: true }
+            //        , { header: '종료일', name: 'EndDate', width: 200, visible: true }
+            //        , { header: '사용여부', name: 'OnOff', width: 200, visible: true }
+            //        , { header: '비고', name: 'Remark', width: 200, visible: true }
+            //    ],
+            //    viewOptions: {
+            //        actionMode: 'remote',
+            //        loadUrl: '/api/GoodsApi/GetGoodsLargeData/',
+
+            //        paging: {
+            //            visible: true,
+            //            rowCount: 5,
+            //            blockSize: 5
+            //        },
+            //        sorting: {
+            //            visible: true
+            //        }
+            //    }
+            //});
+            //grid2.GridView.draw($("#grid2"));
+        });
+    </script>
+</body>
+</html>

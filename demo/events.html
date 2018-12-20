@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zsmcJs.Grid.Binding</title>
+
+    <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="../css/zsmc-common.css" />
+    <link rel="stylesheet" href="../css/zsmc-grid.css" />
+    <link rel="stylesheet" href="../css/zsmc-icon.css" />
+</head>
+
+<body>
+    <div class="row">
+        <div id="grid">
+        </div>
+
+        <br />
+    </div>
+    <span>Events</span>
+    <div style="height: 200px; overflow:auto; border: groove;">
+        <ul class="event-log"></ul>
+    </div>
+
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="../node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="../js/zsmc.lib.js"></script>
+    <script type="text/javascript" src="../js/zsmc.prototype.extension.js"></script>
+    <script type="text/javascript" src="../js/zsmc.grid.js"></script>
+    <script type="text/javascript" src="../js/zsmc.grid.template.js"></script>
+    <script type="text/javascript" src="../js/zsmc.grid.data.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            var grid = new zsmcJs.grid({
+                keyField: 'Id',
+                maxWidth: '100%',
+                columns: [
+                    {
+                        header: 'Id'
+                        , name: 'Id'
+                        , visible: false
+                    }
+                    , {
+                        header: 'Name'
+                        , name: 'Name'
+                        , width: 200
+                        , dataType: 'text'
+                        , displayType: 'link'
+                        , link: '/Home/ZsmcBinding/{{Id}}'
+                        , target: '_blank'
+                        , editor: {
+                            type: 'text'
+                        }
+                    }
+                    , {
+                        header: 'Phone'
+                        , name: 'Phone'
+                        , align: 'center'
+                        , width: 200
+                        , editor: {
+                            type: 'text'
+                        }
+                    }
+                    , {
+                        header: 'Company'
+                        , name: 'Company'
+                        , width: 400
+                        , editor: {
+                            type: 'text'
+                        }
+                    }
+                    , {
+                        header: 'Zip'
+                        , name: 'Zip'
+                        , width: 120
+                        , dataType: 'number'
+                        , editor: {
+                            type: 'text'
+                        }
+                    }
+                    , {
+                        header: 'City'
+                        , name: 'City'
+                        , width: 120
+                        , editor: {
+                            type: 'select'
+                        },
+                        selectOptions: [
+                            { text: 'Fogo', value: 1 }
+                            , { text: 'Machelen', value: 2 }
+                            , { text: 'Norman', value: 3 }
+                            , { text: 'Sautin', value: 4 }
+                        ]
+                    }
+                    , {
+                        header: 'BirthDay'
+                        , name: 'BirthDay'
+                        , align: 'center'
+                        , width: 100
+                        , dataType: 'datetime'
+                        , displayType: 'datetime'
+                        , displayFormat: 'yyyy-mm-dd'
+                        , editor: {
+                            type: 'date'
+                        }
+                    }
+                    , {
+                        header: 'Use'
+                        , name: 'Use'
+                        , align: 'center'
+                        , width: 100
+                        , dataType: 'bool'
+                        , displayType: 'checkbox'
+                        , editor: {
+                            type: 'checkbox'
+                        }
+                    }, {
+                        header: 'Memo'
+                        , name: 'Memo'
+                        , width: 200
+                        , editor: {
+                            type: 'textarea'
+                        }
+                    }
+                ],
+                viewOptions: {
+                    selectable : true,
+                    actionMode: 'local',
+                    paging: {
+                        visible: true,
+                        rowCount: 5,
+                        blockSize: 5
+                    },
+                    sorting: {
+                        visible: true
+                    }
+                },
+                editOptions: {
+                    actionMode: 'local',
+                    actionColumn: {
+                        width: 100,
+                        visible: true,
+                        newAction: {
+                            visible: true
+                        },
+                        editAction: {
+                            visible: true
+                        },
+                        deleteAction: {
+                            visible: true
+                        }
+                    },
+                    editing: {
+                        mode: 'inline', //cell, inline, popup
+                        addButton: {
+                            caption: '추가'
+                            , visible: true
+                        },
+                        updateButton: {
+                            caption: '수정'
+                            , visible: true
+                        },
+                        cancelButton: {
+                            caption: '취소'
+                            , visible: true
+                        },
+                        copyButton: {
+                            caption: '복사'
+                            , visible: false
+                        },
+                        deleteButton: {
+                            caption: '삭제'
+                            , visible: true
+                        },
+                        insertButton: {
+                            caption: '삽입'
+                            , visible: false
+                        }
+                    }
+                }
+            });
+            grid.GridView.draw($("#grid"));
+            grid.Provider.bindData(data);
+
+            grid.Events.onRowClicked = function (data, rowId) {
+                $(".event-log").append("<span>" + "row clicked : " + JSON.stringify(data) + "</span><br/>");
+            }
+
+            grid.Events.onRowDblClicked = function (data, rowId) {
+                $(".event-log").append("<span>" + "row double clicked : " + JSON.stringify(data) + "</span><br/>");
+            }
+
+            grid.Events.onRowEnterKeyDown = function (data, rowId) {
+                $(".event-log").append("<span>" + "row enter key down: " + JSON.stringify(data) + "</span><br/>");
+            }
+
+            grid.Events.onBeforeSorting = function (header, direction) {
+                $(".event-log").append("<span>" + "column before sorting: " + header + "   " + direction + "</span><br/>");
+            }
+
+            grid.Events.onAfterSorting = function (header, direction) {
+                $(".event-log").append("<span>" + "column after sorting: " + header + "   " + direction + "</span><br/>");
+            }
+
+            grid.Events.onBeforePaging = function (pageNumber) {
+                $(".event-log").append("<span>" + "column before paging: " + pageNumber + "</span><br/>");
+            }
+
+            grid.Events.onAfterPaging = function (pageNumber) {
+                $(".event-log").append("<span>" + "column after paging: " + pageNumber + "</span><br/>");
+            }
+
+            grid.Events.onEditorLoaded = function ($el, data, rowId) {
+                $(".event-log").append("<span>" + "editor loaded: " + rowId + " data: " + JSON.stringify(data) + "</span><br/>");
+            }
+
+            grid.Events.onEditorLoaded = function ($el, data, rowId) {
+                $(".event-log").append("<span>" + "editor loaded: " + rowId + " data: " + JSON.stringify(data) + "</span><br/>");
+            }
+
+            grid.Events.onRowUpdating = function (data, rowId) {
+                $(".event-log").append("<span>" + "row updating: " + JSON.stringify(data) + "</span><br/>");
+            }
+
+            grid.Events.onRowUpdated = function (data, rowId) {
+                $(".event-log").append("<span>" + "row updated: " + JSON.stringify(data) + "</span><br/>");
+            }
+
+            grid.Events.onRowDeleting = function (data, rowId) {
+                $(".event-log").append("<span>" + "row deleting: " + JSON.stringify(data) + "</span><br/>");
+            }
+
+            grid.Events.onRowDeleted = function (data, rowId) {
+                $(".event-log").append("<span>" + "row deleted: " + JSON.stringify(data) + "</span><br/>");
+            }
+        
+        });
+
+
+    </script>
+
+</body>
+</html>
