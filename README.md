@@ -1,6 +1,13 @@
 # zsmcJs
 ## Grid
 #### GridView
+
+##### Dependency
+* jQuery
+* font-awesome
+* bootstrap 
+* bootstrap-datepicker
+
 ##### Columns
 * text
 * number
