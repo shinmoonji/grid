@@ -482,3 +482,8 @@ onAfterSorting: function (header, rowId)
 onBeforePaging: function (header, rowId)
 onAfterPaging: function (header, rowId)
 ```
+
+#### License
+###### This software is licensed under the [MIT](https://opensource.org/licenses/MIT)
+
+
